@@ -1,0 +1,7 @@
+spacy-udpipe
+python-dotenv
+langdetect
+bitermplus
+pandas
+numpy
+gensim
