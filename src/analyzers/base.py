@@ -35,8 +35,10 @@ class BaseAnalyzer:
 		pass
 
 	def analyze(self) -> None:
+		print(f"Running analyzer '{self.get_name()}' {self.config}")
 		self.check()
 		self.prepare()
+		print("Analyzing")
 		self._analyze()
 
 	def check(self) -> None:
@@ -52,7 +54,8 @@ class BaseAnalyzer:
 				return
 			print("Generating udpipe file")
 			input_file.seek(0)
-			reader = csv.reader(input_file, delimiter=self.csv_separator)
+			# TODO read with pandas?
+			reader = csv.reader(input_file, delimiter=self.csv_separator, quotechar="\"", quoting=csv.QUOTE_ALL, skipinitialspace=True)
 			header = next(reader)
 			try:
 				data_index = header.index(self.data_key)
@@ -121,8 +124,12 @@ class BaseAnalyzer:
 	def get_output_file_path(self, filename: str) -> str:
 		return f"{self.output_dir}/{filename}"
 
+	def get_sentences(self) -> list[str]:
+		df = self.read_csv(self.get_udpipe_file_path())
+		return df[1].str.strip().tolist()
+
 	def read_csv(self, filename: str, header: bool = False) -> str:
-		data = pd.read_csv(filename, header=None, sep=f'"\s*[|{self.csv_separator}]\s*"', encoding="utf8")
+		data = pd.read_csv(filename, header=None, sep=f'"\s*[|{self.csv_separator}]\s*"', encoding="utf8", engine="python")
 		data = data.transform(lambda s: s.str.strip("\""))
 		if header:
 			return data.iloc[1:]

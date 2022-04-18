@@ -7,7 +7,7 @@ import pickle
 class Btm(BaseAnalyzer):
 
 	def get_name(self) -> str:
-		return "btm"
+		return "BTM"
 
 	def get_default_config(self) -> dict:
 		return {
@@ -20,7 +20,7 @@ class Btm(BaseAnalyzer):
 		}
 
 	def _analyze(self) -> None:	
-		texts = self._prepare_texts()
+		texts = self.get_sentences()
 		# PREPROCESSING
 		# Obtaining terms frequency in a sparse matrix and corpus vocabulary
 		X, vocabulary, vocab_dict = btm.get_words_freqs(texts)
@@ -57,7 +57,3 @@ class Btm(BaseAnalyzer):
 		print(perplexity)
 		print(coherence)
 		print(model.labels_)
-
-	def _prepare_texts(self) -> list[str]:
-		df = self.read_csv(self.get_udpipe_file_path())
-		return df[1].str.strip().tolist()
