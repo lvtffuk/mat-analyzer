@@ -31,7 +31,9 @@ analyzer: BaseAnalyzer = AnalyzerClass(
 	os.getenv("DATA_KEY"),
 	os.getenv("DOC_ID_KEY"),
 	os.getenv("OUTPUT_DIR"),
-	os.getenv("CONFIG_FILE")
+	os.getenv("CONFIG_FILE"),
+	language=os.getenv("LANGUAGE"),
+	csv_separator=os.getenv("CSV_SEPARATOR")
 )
 
 analyzer.analyze()

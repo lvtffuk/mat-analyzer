@@ -21,7 +21,15 @@ class BaseAnalyzer:
 
 	nlp = None
 
-	def __init__(self, input_file: str, data_key: str, doc_id_key: str, output_dir: str, config_file: str) -> None:
+	def __init__(
+		self, 
+		input_file: str, 
+		data_key: str, 
+		doc_id_key: str, 
+		output_dir: str, 
+		config_file: str, 
+		**options # TODO typings
+	) -> None:
 		self.input_file = input_file
 		self.data_key = data_key
 		self.doc_id_key = doc_id_key
@@ -29,6 +37,8 @@ class BaseAnalyzer:
 		if config_file:
 			with open(config_file, "rb") as config:
 				self.config = self.get_default_config() | yaml.safe_load(config)
+		self.lang = options.get("language") or "cs"
+		self.csv_separator = options.get("csv_separator") or ";"
 
 	@abstractmethod
 	def get_name(self) -> str:
