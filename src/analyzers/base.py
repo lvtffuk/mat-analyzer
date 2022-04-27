@@ -34,9 +34,10 @@ class BaseAnalyzer:
 		self.data_key = data_key
 		self.doc_id_key = doc_id_key
 		self.output_dir = output_dir
+		self.config = self.get_default_config()
 		if config_file:
 			with open(config_file, "rb") as config:
-				self.config = self.get_default_config() | yaml.safe_load(config)
+				self.config = self.config | yaml.safe_load(config)
 		self.lang = options.get("language") or "cs"
 		self.csv_separator = options.get("csv_separator") or ";"
 
@@ -54,6 +55,12 @@ class BaseAnalyzer:
 	def check(self) -> None:
 		if not os.path.exists(self.output_dir):
 			raise ValueError(f"Out dir '{self.output_dir}' doesn't exist")
+		if not os.path.exists(self.input_file):
+			raise ValueError(f"Input file '{self.input_file}' doesn't exist")
+		if not self.doc_id_key:
+			raise ValueError("No Document ID key defined")
+		if not self.data_key:
+			raise ValueError("No Data key defined")
 		spacy_udpipe.download(self.lang)
 		self.nlp = spacy_udpipe.load(self.lang)
 
@@ -118,6 +125,15 @@ class BaseAnalyzer:
 			saved_hash = file.read().strip()
 			return hash == saved_hash
 
+	# Gets the list of separated words from the sentences.
+	# The words are lowercased and stripped.
+	def get_texts(self) -> list[list[str]]:
+		return list(map(lambda s: list(map(lambda s: s.lower().strip(".,?!\n"), s.split(" "))), self.get_sentences()))
+
+	def get_sentences(self) -> list[str]:
+		df = self.read_csv(self.get_udpipe_file_path())
+		return df[1].str.strip().tolist()
+
 	def get_default_config(self) -> dict:
 		return {}
 
@@ -133,10 +149,6 @@ class BaseAnalyzer:
 
 	def get_output_file_path(self, filename: str) -> str:
 		return f"{self.output_dir}/{filename}"
-
-	def get_sentences(self) -> list[str]:
-		df = self.read_csv(self.get_udpipe_file_path())
-		return df[1].str.strip().tolist()
 
 	def read_csv(self, filename: str, header: bool = False) -> str:
 		data = pd.read_csv(filename, header=None, sep=f'"\s*[|{self.csv_separator}]\s*"', encoding="utf8", engine="python")

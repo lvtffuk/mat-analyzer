@@ -5,3 +5,4 @@ bitermplus
 pandas
 numpy
 gensim
+pyyaml

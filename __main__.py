@@ -14,6 +14,9 @@ if os.getenv("CLEAR", False) == "1":
 
 analyzerName: str = os.getenv("ANALYZER")
 
+if not analyzerName:
+	raise ValueError("No analyzer set")
+
 analyzerModule: ModuleType = importlib.import_module(f".{analyzerName.lower()}", "src.analyzers")
 
 analyzerClassName: str

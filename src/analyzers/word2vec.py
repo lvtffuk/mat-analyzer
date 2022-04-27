@@ -16,7 +16,7 @@ class Word2Vec(BaseAnalyzer):
 
 	def _analyze(self) -> None:
 		model = gensim.models.Word2Vec(
-			sentences=self._get_texts(), 
+			sentences=self.get_texts(), 
 			vector_size=self.config["vector_size"],
 			window=self.config["window"],
 			min_count=self.config["min_count"],
@@ -26,8 +26,3 @@ class Word2Vec(BaseAnalyzer):
 		sims = model.wv.most_similar("fotbal", topn=10)  # get other similar words
 
 		print(sims)
-
-	# Gets the list of separated words from the sentences.
-	# The words are lowercased and stripped.
-	def _get_texts(self) -> list[list[str]]:
-		return list(map(lambda s: list(map(lambda s: s.lower().strip(".,?!\n"), s.split(" "))), self.get_sentences()))
