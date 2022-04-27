@@ -15,7 +15,7 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: mat-twitter-downloader 
+  IMAGE_NAME: mat-analyzer
 
 jobs:
   # Run tests.
