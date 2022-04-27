@@ -23,6 +23,3 @@ class Word2Vec(BaseAnalyzer):
 			workers=self.config["workers"]
 		)
 		model.save(self.get_output_file_path("word2vec.model"))
-		sims = model.wv.most_similar("fotbal", topn=10)  # get other similar words
-
-		print(sims)

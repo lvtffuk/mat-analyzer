@@ -44,16 +44,3 @@ class Btm(BaseAnalyzer):
 		model.fit(biterms, iterations=self.config["iterations"])
 		with open(self.get_output_file_path("btm-model.pkl"), "wb") as file:
 			pickle.dump(model, file)
-
-
-		# Testing data
-		p_zd = model.transform(docs_vec)
-
-		# METRICS
-		perplexity = btm.perplexity(model.matrix_topics_words_, p_zd, X, 8)
-		coherence = btm.coherence(model.matrix_topics_words_, X, M=20)
-
-		print(btm.get_docs_top_topic(texts, model.matrix_docs_topics_))
-		print(perplexity)
-		print(coherence)
-		print(model.labels_)

@@ -18,14 +18,13 @@ class LSI(BaseAnalyzer):
 		}
 
 	def _analyze(self) -> None:
+		# TODO deprecated?
 		self._download_corpus()
 		texts = self.get_texts()
 		dictionary = gensim.corpora.Dictionary(texts)
 		corpus = [dictionary.doc2bow(text) for text in texts]
 		model = gensim.models.LsiModel(corpus, id2word=dictionary, num_topics=self.config["num_topics"])
 		model.save(self.get_output_file_path("lsi.model"))
-		
-		print(model.show_topics())
 
 	def _download_corpus(self) -> None:
 		if os.path.exists(self._get_corpus_path()):
