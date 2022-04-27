@@ -5,4 +5,6 @@ RUN apt-get update && apt-get -y install gcc g++
 WORKDIR /usr/src/app
 COPY . .
 RUN pip install -r requirements.txt
+# connect the repository to the container
+LABEL org.opencontainers.image.source https://github.com/zabkwak/mat-analyzer
 CMD [ "python", "./" ]
