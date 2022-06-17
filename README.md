@@ -76,7 +76,7 @@ window: 5
 min_count: 1
 workers: 4
 ```
-### Voyant tools
+### VT
 Creates XML file for [Voyant tools](https://voyant-tools.org/). The file is stored as `voyant-tools.xml` in the output directory.
 #### Configuration
 ```yaml
@@ -116,7 +116,7 @@ docker pull ghcr.io/zabkwak/mat-analyzer:latest
 ```bash
 docker run \
 --name=mat-analyzer \
--e 'ANALYZER=BTM|LSI|Word2Vec' \
+-e 'ANALYZER=BTM|LSI|Word2Vec|VT' \
 -e 'INPUT_FILE=./input/tweets.csv' \
 -e 'OUTPUT_DIR=./output' \
 -e 'DATA_KEY=tweet_id' \
