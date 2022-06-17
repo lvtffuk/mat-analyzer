@@ -47,9 +47,9 @@ The input `csv` file must contain at least two columns. One with document ids an
 ### Example
 #### Example
 ```csv
-"doc_id";"text"
-"1";"Some text"
-"2";"Some other text"
+"doc_id";"text";"additional_field"
+"1";"Some text";"foo"
+"2";"Some other text";"bar"
 ```
 First line must be a header.
 
@@ -76,6 +76,28 @@ window: 5
 min_count: 1
 workers: 4
 ```
+### Voyant tools
+Creates XML file for [Voyant tools](https://voyant-tools.org/). The file is stored as `voyant-tools.xml` in the output directory.
+#### Configuration
+```yaml
+author_key: 'author'
+published_key: 'published'
+```
+##### author_key
+The column in the input file representing the author. The field is required.
+##### published_key
+The column in the input file representing the publication time of the text. The field is required.
+#### Import
+The file should be uploaded in the [Voyant tools](https://voyant-tools.org/) but before that the xpath of the fields must be specified:
+Field | Xpath
+:------------ | :------------- |
+`Documents` | `//items/` 
+`Content` | `//item/content` 
+`Author` | `//item/author` 
+`Publication Date` | `//item/published`
+
+For more information check the [docs](https://voyant-tools.org/docs/#!/guide/corpuscreator-section-xml).
+
 ## Output
 The output directory contains models mentioned above and additional files.
 File | Description
