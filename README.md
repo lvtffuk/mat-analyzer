@@ -1,5 +1,5 @@
 # mat-analyzer
-Downloader for Twitter data for Media Analytics Tool project. However it can be used for any text analysis.
+Text analyzer for data for Media Analytics Tool project.
 
 ## Development
 ### Requirements

@@ -6,3 +6,4 @@ pandas
 numpy
 gensim
 pyyaml
+dicttoxml

@@ -61,10 +61,10 @@ class BaseAnalyzer:
 			raise ValueError("No Document ID key defined")
 		if not self.data_key:
 			raise ValueError("No Data key defined")
-		spacy_udpipe.download(self.lang)
-		self.nlp = spacy_udpipe.load(self.lang)
 
 	def prepare(self):
+		spacy_udpipe.download(self.lang)
+		self.nlp = spacy_udpipe.load(self.lang)
 		with open(self.input_file, mode="r", encoding="utf8") as input_file:
 			if self.udpipe_exists(input_file):
 				print("Udpipe file for input exists.")
