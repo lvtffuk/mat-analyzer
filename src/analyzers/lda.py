@@ -4,6 +4,7 @@ from gensim.utils import simple_preprocess
 import nltk
 from nltk.corpus import stopwords
 import gensim.corpora as corpora
+import json
 
 class LDA(BaseAnalyzer):
 
@@ -31,3 +32,5 @@ class LDA(BaseAnalyzer):
 			num_topics=self.config["num_topics"]
 		)
 		lda_model.save(self.get_output_file_path("lda.model"))
+		with open(self.get_output_file_path("lda-corpus.json"), "w") as corpus_file:
+			json.dump(corpus, corpus_file)

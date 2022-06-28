@@ -69,6 +69,7 @@ beta: 0.01
 
 ### LDA
 Creates [LDA](https://radimrehurek.com/gensim/models/ldamodel.html) model from lemmatized texts. The model is stored as `lda.model`, `lda.model.expElogbeta.npy`, `lda.model.id2word` and `lda.model.state` in the output directory.
+For another analyzes the corpus is stored in the output directory as `lda-corpus.json`.
 #### Configuration
 ```yaml
 num_topics: 10
