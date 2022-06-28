@@ -41,6 +41,7 @@ Variable | Description | Required | Default value
 `CONFIG_FILE` | The path to the config `yml` file of the analyzer. | :x: | `None`
 `LANGUAGE` | The language for the udpipe analysis. | :x: | `cs`
 `CLEAR` | Indicates if the output dir should be cleared before the run. All downloads are starting again. | :x: | `0`
+`STOP_WORDS` | The path to non-header `csv` file including stop words. | :x: | `None`
 
 ## Input file
 The input `csv` file must contain at least two columns. One with document ids and one with the texts to analyze.
@@ -65,17 +66,17 @@ M: 20
 alpha: 6.25
 beta: 0.01
 ```
-### LSI
-Creates [LSI](https://radimrehurek.com/gensim/models/lsimodel.html) model from lemmatized texts. The model is stored as `lsi.model` and `lsi.model.projection` in the output directory.
-### Word2Vec
-Creates [Word2Vec](https://en.wikipedia.org/wiki/Word2vec) model from lemmatized texts. The model is stored as `word2vec.model` file in the output directory.
+
+### LDA
+Creates [LDA](https://radimrehurek.com/gensim/models/ldamodel.html) model from lemmatized texts. The model is stored as `lda.model`, `lda.model.expElogbeta.npy`, `lda.model.id2word` and `lda.model.state` in the output directory.
 #### Configuration
 ```yaml
-vector_size: 100
-window: 5
-min_count: 1
-workers: 4
+num_topics: 10
 ```
+
+### LSI
+Creates [LSI](https://radimrehurek.com/gensim/models/lsimodel.html) model from lemmatized texts. The model is stored as `lsi.model` and `lsi.model.projection` in the output directory.
+
 ### VT
 Creates XML file for [Voyant tools](https://voyant-tools.org/). The file is stored as `voyant-tools.xml` in the output directory.
 #### Configuration
@@ -91,12 +92,22 @@ The column in the input file representing the publication time of the text. The 
 The file should be uploaded in the [Voyant tools](https://voyant-tools.org/) but before that the xpath of the fields must be specified:
 Field | Xpath
 :------------ | :------------- |
-`Documents` | `//items/` 
+`Documents` | `//items` 
 `Content` | `//item/content` 
 `Author` | `//item/author` 
 `Publication Date` | `//item/published`
 
 For more information check the [docs](https://voyant-tools.org/docs/#!/guide/corpuscreator-section-xml).
+
+### Word2Vec
+Creates [Word2Vec](https://en.wikipedia.org/wiki/Word2vec) model from lemmatized texts. The model is stored as `word2vec.model` file in the output directory.
+#### Configuration
+```yaml
+vector_size: 100
+window: 5
+min_count: 1
+workers: 4
+```
 
 ## Output
 The output directory contains models mentioned above and additional files.

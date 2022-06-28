@@ -36,7 +36,8 @@ analyzer: BaseAnalyzer = AnalyzerClass(
 	os.getenv("OUTPUT_DIR"),
 	os.getenv("CONFIG_FILE"),
 	language=os.getenv("LANGUAGE"),
-	csv_separator=os.getenv("CSV_SEPARATOR")
+	csv_separator=os.getenv("CSV_SEPARATOR"),
+	stop_words=os.getenv("STOP_WORDS")
 )
 
 analyzer.analyze()

@@ -16,6 +16,7 @@ class BaseAnalyzer:
 	output_dir: str
 	lang: str = "cs"
 	csv_separator: str = ";"
+	stop_words: list[str] = []
 
 	config: dict = {}
 
@@ -40,6 +41,8 @@ class BaseAnalyzer:
 				self.config = self.config | yaml.safe_load(config)
 		self.lang = options.get("language") or "cs"
 		self.csv_separator = options.get("csv_separator") or ";"
+		if options.get("stop_words"):
+			self.stop_words = self.read_csv(options.get("stop_words"))[0].values.tolist()
 
 	@abstractmethod
 	def get_name(self) -> str:
@@ -147,10 +150,20 @@ class BaseAnalyzer:
 	def get_udpipe_file_path(self) -> str:
 		return self.get_output_file_path("udpipe.csv")
 
+	def get_udpipe_data_file_path(self) -> str:
+		return self.get_output_file_path("udpipe-data.csv")
+
 	def get_output_file_path(self, filename: str) -> str:
 		return f"{self.output_dir}/{filename}"
 
-	def read_csv(self, filename: str, header: bool = False) -> str:
+	def read_csv(self, filename: str, header: bool = False) -> pd.DataFrame:
+		"""
+		Reads the CSV file.
+
+		:param filename: The path to the file.
+		:param header: Indicates if the file contains header and the header data are skipped.
+		:return: Data frame.
+		""" 
 		data = pd.read_csv(filename, header=None, sep=f'"\s*[|{self.csv_separator}]\s*"', encoding="utf8", engine="python")
 		data = data.transform(lambda s: s.str.strip("\""))
 		if header:
