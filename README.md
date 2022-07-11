@@ -7,7 +7,7 @@ Text analyzer for data for Media Analytics Tool project.
 - `gcc` and `g++` libraries
 ### Installation & test run
 ```bash
-git clone git@github.com:zabkwak/mat-analyzer.git
+git clone git@github.com:lvtffuk/mat-analyzer.git
 cd mat-analyzer
 pip install -r requirements.txt
 python ./
@@ -120,9 +120,9 @@ File | Description
 `udpipe.md5` | MD5 checksum of the input file. If the checksum matches the lemmatization is not done again.
 
 ## Docker
-The [image](https://github.com/zabkwak/mat-analyzer/pkgs/container/mat-analyzer) is stored in GitHub packages registry and the app can be run in the docker environment.
+The [image](https://github.com/lvtffuk/mat-analyzer/pkgs/container/mat-analyzer) is stored in GitHub packages registry and the app can be run in the docker environment.
 ```bash
-docker pull ghcr.io/zabkwak/mat-analyzer:latest
+docker pull ghcr.io/lvtffuk/mat-analyzer:latest
 ```
 
 ```bash
@@ -135,7 +135,7 @@ docker run \
 -e 'DOC_ID_KEY=tweet' \
 -v '/absolute/path/to/output/dir:/usr/src/app/output' \
 -v '/absolute/path/to/input/dir:/usr/src/app/input' \
-ghcr.io/zabkwak/mat-analyzer:latest  
+ghcr.io/lvtffuk/mat-analyzer:latest  
 ```
 The volumes must be set for accessing input and output data.
 
